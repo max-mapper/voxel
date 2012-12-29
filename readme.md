@@ -2,9 +2,9 @@
 
 voxel geometry generation and meshing algorithms in javascript. written by @mikolalysenko and put on npm by me.
 
-original repo: https://github.com/mikolalysenko/mikolalysenko.github.com/tree/master/MinecraftMeshes2
-blog post: http://0fps.wordpress.com/2012/07/07/meshing-minecraft-part-2/
-webgl demo: http://mikolalysenko.github.com/MinecraftMeshes2/
+- original repo: https://github.com/mikolalysenko/mikolalysenko.github.com/tree/master/MinecraftMeshes2
+- blog post: http://0fps.wordpress.com/2012/07/07/meshing-minecraft-part-2/
+- webgl demo: http://mikolalysenko.github.com/MinecraftMeshes2/
 
 # installation
 
@@ -13,6 +13,7 @@ in node:
 npm install voxel
 ```
 in a browser:
+
 use `voxel-browser.js`
 
 # usage
