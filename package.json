@@ -1,0 +1,21 @@
+{
+  "name": "voxel",
+  "description": "tools to work with voxel generation and meshing in javascript",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/maxogden/voxel.git"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": {
+    "name": "Max Ogden",
+    "email": "max@maxogden.com"
+  },
+  "license": "MIT",
+  "engine": {
+    "node": ">=0.6.0"
+  }
+}
