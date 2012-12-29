@@ -13,11 +13,7 @@ in node:
 npm install voxel
 ```
 in a browser:
-```
-npm install voxel
-npm install browserify -g
-browserify -r voxel -o voxel.js
-```
+use `voxel-browser.js`
 
 # usage
 
