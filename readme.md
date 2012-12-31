@@ -55,11 +55,11 @@ voxel.geometry['Hilly Terrain'] // pre-generated at some specific example size
 
 ## require('voxel').generator
 
-an object with a bunch of voxel generation functions to play with, from http://mikolalysenko.github.com/MinecraftMeshes2/
+an object that contains a bunch of voxel generation functions to play with, from http://mikolalysenko.github.com/MinecraftMeshes2/
 
-## require('voxel').geometry
+## require('voxel').generateExamples()
 
-an object with a bunch of pre-generated voxel geometries to play with, from http://mikolalysenko.github.com/MinecraftMeshes2/
+returns an object that contains a bunch of pre-generated voxel geometries to play with, from http://mikolalysenko.github.com/MinecraftMeshes2/
 
 # license
 

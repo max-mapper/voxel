@@ -65,11 +65,16 @@ module.exports.generator['Hilly Terrain'] = function(i,j,k) {
   return 0xff0000;
 }
 
-// convenience functions that use the above functions to prebake some simple voxel geometries
-module.exports.geometry['Sphere'] = generate([-16,-16,-16], [16,16,16], module.exports.generator['Sphere']);
-module.exports.geometry['Noise'] = generate([0,0,0], [16,16,16], module.exports.generator['Noise']);
-module.exports.geometry['Dense Noise'] = generate([0,0,0], [16,16,16], module.exports.generator['Dense Noise']);
-module.exports.geometry['Checker'] = generate([0,0,0], [8,8,8], module.exports.generator['Checker']);
-module.exports.geometry['Hill'] = generate([-16, 0, -16], [16,16,16], module.exports.generator['Hill']);
-module.exports.geometry['Valley'] = generate([0,0,0], [32,32,32], module.exports.generator['Valley']);
-module.exports.geometry['Hilly Terrain'] = generate([0, 0, 0], [32,32,32], module.exports.generator['Hilly Terrain']);
+// convenience function that uses the above functions to prebake some simple voxel geometries
+module.exports.generateExamples = function() {
+  return {
+    'Sphere': generate([-16,-16,-16], [16,16,16], module.exports.generator['Sphere']),
+    'Noise': generate([0,0,0], [16,16,16], module.exports.generator['Noise']),
+    'Dense Noise': generate([0,0,0], [16,16,16], module.exports.generator['Dense Noise']),
+    'Checker': generate([0,0,0], [8,8,8], module.exports.generator['Checker']),
+    'Hill': generate([-16, 0, -16], [16,16,16], module.exports.generator['Hill']),
+    'Valley': generate([0,0,0], [32,32,32], module.exports.generator['Valley']),
+    'Hilly Terrain': generate([0, 0, 0], [32,32,32], module.exports.generator['Hilly Terrain'])
+  }
+}
+
