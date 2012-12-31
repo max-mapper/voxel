@@ -28,25 +28,38 @@ example that creates randomly colored voxels:
 
 ```javascript
 require('voxel').generate([0,0,0], [16,16,16], function(x,y,z) {
-  return Math.round(Math.random() * 0xffffff);
-});
+  return Math.round(Math.random() * 0xffffff)
+})
 ```
 
 a sphere:
 
 ```javascript
 require('voxel').generate([0,0,0], [32,32,32], function(x,y,z) {
-  return x*x+y*y+z*z <= 16*16 ? 0x113344 : 0;
-});
+  return x*x+y*y+z*z <= 16*16 ? 0x113344 : 0
+})
+```
+
+using the included generator functions:
+
+```javascript
+var voxel = require('voxel')
+voxel.generate([0,0,0], [32,32,32], voxel.generator['Hilly Terrain'])
+// or
+voxel.geometry['Hilly Terrain'] // pre-generated at some specific example size
 ```
 
 ## require('voxel').meshers
 
 `meshers` is an object with `stupid`, `culled`, `monotone` and `greedy` mesher functions. you probably want to just use `greedy`. all mesher functions accept voxel data in the format the gets returned by the `generate` function.
 
+## require('voxel').generator
+
+an object with a bunch of voxel generation functions to play with, from http://mikolalysenko.github.com/MinecraftMeshes2/
+
 ## require('voxel').geometry
 
-`geometry` is an object with a bunch of pre-generated voxel geometries to play with, from http://mikolalysenko.github.com/MinecraftMeshes2/
+an object with a bunch of pre-generated voxel geometries to play with, from http://mikolalysenko.github.com/MinecraftMeshes2/
 
 # license
 
