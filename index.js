@@ -1,3 +1,12 @@
+var chunker = require('./chunker')
+
+module.exports = function(opts) {
+  if (!opts.generateVoxelChunk) opts.generateVoxelChunk = function(low, high) {
+    return generate(low, high, module.exports.generators['Valley'])
+  }
+  return chunker(opts)
+}
+
 module.exports.meshers = {
   culled: require('./meshers/culled').mesher,
   greedy: require('./meshers/greedy').mesher,
@@ -5,6 +14,7 @@ module.exports.meshers = {
   stupid: require('./meshers/stupid').mesher
 }
 
+module.exports.Chunker = chunker.Chunker
 module.exports.geometry = {}
 module.exports.generator = {}
 module.exports.generate = generate

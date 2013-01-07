@@ -1,8 +1,11 @@
 {
   "name": "voxel",
-  "description": "tools to work with voxel generation and meshing in javascript",
-  "version": "0.0.4",
+  "description": "tools to work with voxel generation and chunking in javascript",
+  "version": "0.0.5",
   "main": "index.js",
+  "dependencies": {
+    "inherits": "1.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "http://github.com/maxogden/voxel.git"
