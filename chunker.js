@@ -81,8 +81,8 @@ Chunker.prototype.voxelAtPosition = function(pos, val) {
 Chunker.prototype.voxelVector = function(pos) {
   var size = this.chunkSize
   var cubeSize = this.cubeSize
-  var vx = (size + Math.floor(pos.x / cubeSize)) % size
-  var vy = (size + Math.floor(pos.y / cubeSize)) % size
-  var vz = (size + Math.floor(pos.z / cubeSize)) % size
+  var vx = (size + Math.floor(pos.x / cubeSize) % size) % size
+  var vy = (size + Math.floor(pos.y / cubeSize) % size) % size
+  var vz = (size + Math.floor(pos.z / cubeSize) % size) % size
   return {x: Math.abs(vx), y: Math.abs(vy), z: Math.abs(vz)}
 };
