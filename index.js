@@ -34,7 +34,7 @@ function generate(l, h, f) {
 
 // shape and terrain generator functions
 module.exports.generator['Sphere'] = function(i,j,k) {
-  return i*i+j*j+k*k <= 16*16 ? 0x113344 : 0;
+  return i*i+j*j+k*k <= 16*16 ? 1 : 0;
 }
 
 module.exports.generator['Noise'] = function(i,j,k) {
@@ -50,11 +50,11 @@ module.exports.generator['Checker'] = function(i,j,k) {
 }
 
 module.exports.generator['Hill'] = function(i,j,k) {
-  return j <= 16 * Math.exp(-(i*i + k*k) / 64) ? 0x118822 : 0;
+  return j <= 16 * Math.exp(-(i*i + k*k) / 64) ? 1 : 0;
 }
 
 module.exports.generator['Valley'] = function(i,j,k) {
-  return j <= (i*i + k*k) * 31 / (32*32*2) + 1 ? 0x118822 : 0;
+  return j <= (i*i + k*k) * 31 / (32*32*2) + 1 ? 1 : 0;
 }
 
 module.exports.generator['Hilly Terrain'] = function(i,j,k) {
@@ -63,16 +63,16 @@ module.exports.generator['Hilly Terrain'] = function(i,j,k) {
     return 0;
   }
   if(h0 <= j) {
-    return 0x23dd31;
+    return 1;
   }
   var h1 = 2.0 * Math.sin(Math.PI * i * 0.25 - Math.PI * k * 0.3) + 20;
   if(h1 <= j) {
-    return 0x964B00;
+    return 2;
   }
   if(2 < j) {
     return Math.random() < 0.1 ? 0x222222 : 0xaaaaaa;
   }
-  return 0xff0000;
+  return 3;
 }
 
 // convenience function that uses the above functions to prebake some simple voxel geometries
