@@ -5,7 +5,7 @@ module.exports = function(opts) {
 module.exports.Chunker = Chunker
 
 function Chunker(opts) {
-  this.distance = opts.distance || 2
+  this.distance = opts.chunkDistance || 2
   this.chunkSize = opts.chunkSize || 32
   this.cubeSize = opts.cubeSize || 25
   this.generateVoxelChunk = opts.generateVoxelChunk
