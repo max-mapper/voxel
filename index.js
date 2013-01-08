@@ -2,7 +2,7 @@ var chunker = require('./chunker')
 
 module.exports = function(opts) {
   if (!opts.generateVoxelChunk) opts.generateVoxelChunk = function(low, high) {
-    return generate(low, high, module.exports.generators['Valley'])
+    return generate(low, high, module.exports.generator['Valley'])
   }
   return chunker(opts)
 }
