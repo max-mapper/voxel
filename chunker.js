@@ -58,11 +58,15 @@ Chunker.prototype.chunkAtPosition = function(position) {
   return chunkPos
 };
 
-Chunker.prototype.voxelIndex = function(pos) {
+Chunker.prototype.voxelIndex = function(voxelVector) {
   var size = this.chunkSize
-  var v = this.voxelVector(pos)
-  var vidx = v.x + v.y*size + v.z*size*size
+  var vidx = voxelVector.x + voxelVector.y*size + voxelVector.z*size*size
   return vidx
+}
+
+Chunker.prototype.voxelIndexFromPosition = function(pos) {
+  var v = this.voxelVector(pos)
+  return this.voxelIndex(v)
 }
 
 Chunker.prototype.voxelAtPosition = function(pos, val) {
