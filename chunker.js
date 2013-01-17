@@ -73,7 +73,8 @@ Chunker.prototype.voxelAtPosition = function(pos, val) {
   var ckey = this.chunkAtPosition(pos).join('|')
   var chunk = this.chunks[ckey]
   if (!chunk) return false
-  var vidx = this.voxelIndex(pos)
+  var vector = this.voxelVector(pos)
+  var vidx = this.voxelIndex(vector)
   if (!vidx) return false
   if (typeof val !== 'undefined') {
     chunk.voxels[vidx] = val
