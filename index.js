@@ -75,6 +75,10 @@ module.exports.generator['Hilly Terrain'] = function(i,j,k) {
   return 3;
 }
 
+module.exports.scale = function ( x, fromLow, fromHigh, toLow, toHigh ) {
+  return ( x - fromLow ) * ( toHigh - toLow ) / ( fromHigh - fromLow ) + toLow
+}
+
 // convenience function that uses the above functions to prebake some simple voxel geometries
 module.exports.generateExamples = function() {
   return {
