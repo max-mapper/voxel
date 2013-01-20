@@ -75,7 +75,7 @@ Chunker.prototype.voxelAtPosition = function(pos, val) {
   if (!chunk) return false
   var vector = this.voxelVector(pos)
   var vidx = this.voxelIndex(vector)
-  if (!vidx) return false
+  if (!vidx && vidx !== 0) return false
   if (typeof val !== 'undefined') {
     chunk.voxels[vidx] = val
   }
