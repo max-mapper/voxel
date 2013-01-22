@@ -1,7 +1,7 @@
 {
   "name": "voxel",
   "description": "tools to work with voxel generation and chunking in javascript",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "index.js",
   "dependencies": {
     "inherits": "1.0.0"
