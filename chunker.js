@@ -1,3 +1,6 @@
+var events = require('events')
+var inherits = require('inherits')
+
 module.exports = function(opts) {
   return new Chunker(opts)
 }
@@ -13,7 +16,9 @@ function Chunker(opts) {
   this.meshes = {}
 }
 
-Chunker.prototype.generateMissingChunks = function(position) {
+inherits(Chunker, events.EventEmitter)
+
+Chunker.prototype.requestMissingChunks = function(position) {
   var current = this.chunkAtPosition(position)
   var x = current[0]
   var y = current[1]
@@ -23,7 +28,7 @@ Chunker.prototype.generateMissingChunks = function(position) {
     for (var cy = (y - dist); cy !== (y + dist); ++cy) {
       for (var cz = (z - dist); cz !== (z + dist); ++cz) {
         if (!this.chunks[[cx, cy, cz].join('|')]) {
-          this.generateChunk(cx, cy, cz)
+          this.emit('missingChunk', cx, cy, cz)
         }
       }
     }
