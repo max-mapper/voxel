@@ -18,22 +18,30 @@ function Chunker(opts) {
 
 inherits(Chunker, events.EventEmitter)
 
-Chunker.prototype.requestMissingChunks = function(position) {
+Chunker.prototype.nearbyChunks = function(position) {
   var current = this.chunkAtPosition(position)
   var x = current[0]
   var y = current[1]
   var z = current[2]
   var dist = this.distance
+  var nearby = []
   for (var cx = (x - dist); cx !== (x + dist); ++cx) {
     for (var cy = (y - dist); cy !== (y + dist); ++cy) {
       for (var cz = (z - dist); cz !== (z + dist); ++cz) {
-        if (!this.chunks[[cx, cy, cz].join('|')]) {
-          this.emit('missingChunk', cx, cy, cz)
-        }
+        nearby.push([cx, cy, cz])
       }
     }
   }
-  return this.chunks
+  return nearby
+}
+
+Chunker.prototype.requestMissingChunks = function(position) {
+  var self = this
+  this.nearbyChunks(position).map(function(chunk) {
+    if (!self.chunks[chunk.join('|')]) {
+      self.emit('missingChunk', chunk)
+    }
+  })
 }
 
 Chunker.prototype.getBounds = function(x, y, z) {
