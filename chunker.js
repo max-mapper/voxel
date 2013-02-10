@@ -18,12 +18,12 @@ function Chunker(opts) {
 
 inherits(Chunker, events.EventEmitter)
 
-Chunker.prototype.nearbyChunks = function(position) {
+Chunker.prototype.nearbyChunks = function(position, distance) {
   var current = this.chunkAtPosition(position)
   var x = current[0]
   var y = current[1]
   var z = current[2]
-  var dist = this.distance
+  var dist = distance || this.distance
   var nearby = []
   for (var cx = (x - dist); cx !== (x + dist); ++cx) {
     for (var cy = (y - dist); cy !== (y + dist); ++cy) {
