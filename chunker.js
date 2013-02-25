@@ -64,16 +64,16 @@ Chunker.prototype.generateChunk = function(x, y, z) {
 Chunker.prototype.chunkAtPosition = function(position) {
   var chunkSize = this.chunkSize
   var cubeSize = this.cubeSize
-  var cx = position.x / cubeSize / chunkSize
-  var cy = position.y / cubeSize / chunkSize
-  var cz = position.z / cubeSize / chunkSize
+  var cx = position[0] / cubeSize / chunkSize
+  var cy = position[1] / cubeSize / chunkSize
+  var cz = position[2] / cubeSize / chunkSize
   var chunkPos = [Math.floor(cx), Math.floor(cy), Math.floor(cz)]
   return chunkPos
 };
 
 Chunker.prototype.voxelIndex = function(voxelVector) {
   var size = this.chunkSize
-  var vidx = voxelVector.x + voxelVector.y*size + voxelVector.z*size*size
+  var vidx = voxelVector[0] + voxelVector[1]*size + voxelVector[2]*size*size
   return vidx
 }
 
@@ -99,8 +99,8 @@ Chunker.prototype.voxelAtPosition = function(pos, val) {
 Chunker.prototype.voxelVector = function(pos) {
   var size = this.chunkSize
   var cubeSize = this.cubeSize
-  var vx = (size + Math.floor(pos.x / cubeSize) % size) % size
-  var vy = (size + Math.floor(pos.y / cubeSize) % size) % size
-  var vz = (size + Math.floor(pos.z / cubeSize) % size) % size
-  return {x: Math.abs(vx), y: Math.abs(vy), z: Math.abs(vz)}
+  var vx = (size + Math.floor(pos[0] / cubeSize) % size) % size
+  var vy = (size + Math.floor(pos[1] / cubeSize) % size) % size
+  var vz = (size + Math.floor(pos[2] / cubeSize) % size) % size
+  return [Math.abs(vx), Math.abs(vy), Math.abs(vz)]
 };
