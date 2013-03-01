@@ -14,6 +14,12 @@ function Chunker(opts) {
   this.generateVoxelChunk = opts.generateVoxelChunk
   this.chunks = {}
   this.meshes = {}
+
+  if (this.chunkSize & this.chunkSize-1 !== 0)
+    throw new Error('chunkSize must be a power of 2')
+  var bits = 0;
+  for (var size = this.chunkSize; size > 0; size >>= 1) bits++;
+  this.chunkBits = bits;
 }
 
 inherits(Chunker, events.EventEmitter)
@@ -45,9 +51,9 @@ Chunker.prototype.requestMissingChunks = function(position) {
 }
 
 Chunker.prototype.getBounds = function(x, y, z) {
-  var size = this.chunkSize
-  var low = [x * size, y * size, z * size]
-  var high = [low[0] + size, low[1] + size, low[2] + size]
+  var bits = this.chunkBits
+  var low = [x << bits, y << bits, z << bits]
+  var high = [(x+1) << bits, (y+1) << bits, (z+1) << bits]
   return [low, high]
 }
 
@@ -61,19 +67,27 @@ Chunker.prototype.generateChunk = function(x, y, z) {
   return chunk
 }
 
+Chunker.prototype.chunkAtCoordinates = function(x, y, z) {
+  var bits = this.chunkBits;
+  var cx = x >> bits;
+  var cy = y >> bits;
+  var cz = z >> bits;
+  var chunkPos = [cx, cy, cz];
+  return chunkPos;
+}
+
 Chunker.prototype.chunkAtPosition = function(position) {
-  var chunkSize = this.chunkSize
-  var cubeSize = this.cubeSize
-  var cx = position[0] / cubeSize / chunkSize
-  var cy = position[1] / cubeSize / chunkSize
-  var cz = position[2] / cubeSize / chunkSize
-  var chunkPos = [Math.floor(cx), Math.floor(cy), Math.floor(cz)]
+  var x = Math.floor(position[0] / cubeSize)
+  var y = Math.floor(position[1] / cubeSize)
+  var z = Math.floor(position[2] / cubeSize)
+  var chunkPos = this.chunkAt(x, y, z)
   return chunkPos
 };
 
-Chunker.prototype.voxelIndex = function(voxelVector) {
-  var size = this.chunkSize
-  var vidx = voxelVector[0] + voxelVector[1]*size + voxelVector[2]*size*size
+Chunker.prototype.voxelIndexFromCoordinates = function(x, y, z) {
+  var bits = this.chunkBits
+  var mask = (1 << bits) - 1
+  var vidx = (x & mask) + (y & mask) << bits + (z & mask) << bits * 2
   return vidx
 }
 
@@ -82,13 +96,11 @@ Chunker.prototype.voxelIndexFromPosition = function(pos) {
   return this.voxelIndex(v)
 }
 
-Chunker.prototype.voxelAtPosition = function(pos, val) {
-  var ckey = this.chunkAtPosition(pos).join('|')
+Chunker.prototype.voxelAtCoordinates = function(x, y, z, val) {
+  var ckey = this.chunkAtCoordinates(x, y, z).join('|')
   var chunk = this.chunks[ckey]
   if (!chunk) return false
-  var vector = this.voxelVector(pos)
-  var vidx = this.voxelIndex(vector)
-  if (!vidx && vidx !== 0) return false
+  var vidx = this.voxelIndexFromCoordinates(x, y, z)
   if (typeof val !== 'undefined') {
     chunk.voxels[vidx] = val
   }
@@ -96,11 +108,26 @@ Chunker.prototype.voxelAtPosition = function(pos, val) {
   return v
 }
 
+Chunker.prototype.voxelAtPosition = function(pos, val) {
+  var x = Math.floor(pos[0] / cubeSize)
+  var y = Math.floor(pos[1] / cubeSize)
+  var z = Math.floor(pos[2] / cubeSize)
+  var v = this.voxelAtCoordinates(x, y, z, val)
+  return v;
+}
+
+// deprecated
+Chunker.prototype.voxelIndex = function(voxelVector) {
+  var vidx = this.voxelIndexFromCoordinates(voxelVector[0], voxelVector[1], voxelVector[2])
+  return vidx
+}
+
+// deprecated
 Chunker.prototype.voxelVector = function(pos) {
-  var size = this.chunkSize
   var cubeSize = this.cubeSize
-  var vx = (size + Math.floor(pos[0] / cubeSize) % size) % size
-  var vy = (size + Math.floor(pos[1] / cubeSize) % size) % size
-  var vz = (size + Math.floor(pos[2] / cubeSize) % size) % size
-  return [Math.abs(vx), Math.abs(vy), Math.abs(vz)]
+  var mask = (1 << this.chunkBits) - 1
+  var vx = (Math.floor(pos[0] / cubeSize)) & mask
+  var vy = (Math.floor(pos[1] / cubeSize)) & mask
+  var vz = (Math.floor(pos[2] / cubeSize)) & mask
+  return [vx, vy, vz]
 };
