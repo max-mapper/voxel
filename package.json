@@ -23,5 +23,8 @@
   },
   "devDependencies": {
     "microtime": "~0.3.3"
+  },
+  "peerDependencies": {
+    "voxel-engine": ">=0.9.0"
   }
 }
