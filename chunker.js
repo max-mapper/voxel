@@ -19,7 +19,7 @@ function Chunker(opts) {
     throw new Error('chunkSize must be a power of 2')
   var bits = 0;
   for (var size = this.chunkSize; size > 0; size >>= 1) bits++;
-  this.chunkBits = bits;
+  this.chunkBits = bits - 1;
 }
 
 inherits(Chunker, events.EventEmitter)
@@ -77,17 +77,18 @@ Chunker.prototype.chunkAtCoordinates = function(x, y, z) {
 }
 
 Chunker.prototype.chunkAtPosition = function(position) {
+  var cubeSize = this.cubeSize;
   var x = Math.floor(position[0] / cubeSize)
   var y = Math.floor(position[1] / cubeSize)
   var z = Math.floor(position[2] / cubeSize)
-  var chunkPos = this.chunkAt(x, y, z)
+  var chunkPos = this.chunkAtCoordinates(x, y, z)
   return chunkPos
 };
 
 Chunker.prototype.voxelIndexFromCoordinates = function(x, y, z) {
   var bits = this.chunkBits
   var mask = (1 << bits) - 1
-  var vidx = (x & mask) + (y & mask) << bits + (z & mask) << bits * 2
+  var vidx = (x & mask) + ((y & mask) << bits) + ((z & mask) << bits * 2)
   return vidx
 }
 
@@ -109,6 +110,7 @@ Chunker.prototype.voxelAtCoordinates = function(x, y, z, val) {
 }
 
 Chunker.prototype.voxelAtPosition = function(pos, val) {
+  var cubeSize = this.cubeSize;
   var x = Math.floor(pos[0] / cubeSize)
   var y = Math.floor(pos[1] / cubeSize)
   var z = Math.floor(pos[2] / cubeSize)
