@@ -102,9 +102,9 @@ Chunker.prototype.voxelAtCoordinates = function(x, y, z, val) {
   var chunk = this.chunks[ckey]
   if (!chunk) return false
   var vidx = this.voxelIndexFromCoordinates(x, y, z)
-  var v = chunk.voxels[vidx]
+  var v = chunk.data[vidx]
   if (typeof val !== 'undefined') {
-    chunk.voxels[vidx] = val
+    chunk.data[vidx] = val
   }
   return v
 }
