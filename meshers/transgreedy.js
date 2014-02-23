@@ -21,19 +21,20 @@ function removeFlags(v) {
   return (v & kNoFlagsMask);
 }
 
-function getType(voxels, offset) {
-  // return voxels[offset];
-  var type = voxels[offset];
-  return type | (type in kTransparentTypes ? kTransparentMask : 0);
-}
-
-return function ohSoGreedyMesher(volume, dims) {
+return function ohSoGreedyMesher(volume, dims, mesherExtraData) {
   var vertices = [], faces = []
     , dimsX = dims[0]
     , dimsY = dims[1]
     , dimsXY = dimsX * dimsY;
 
   var tVertices = [], tFaces = []
+
+  var transparentTypes = mesherExtraData ? (mesherExtraData.transparentTypes || {}) : {};
+  var getType = function(voxels, offset) {
+    var type = voxels[offset];
+    return type | (type in transparentTypes ? kTransparentMask : 0);
+  }
+
 
   //Sweep over 3-axes
   for(var d=0; d<3; ++d) {
