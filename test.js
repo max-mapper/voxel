@@ -50,17 +50,6 @@ test('voxelIndexFromCoordinates', function (t) {
   t.end()
 })
 
-test('voxelIndexFromPosition', function (t) {
-  var chunker = voxel({chunkDistance: 2, chunkSize: 32, cubeSize: 1})
-  t.equal(chunker.voxelIndexFromPosition([0, 0, 0]), 0)
-  t.equal(chunker.voxelIndexFromPosition([0.9999, 0, 0]), 0)
-  t.equal(chunker.voxelIndexFromPosition([1.9999, 0, 0]), 1)
-  t.equal(chunker.voxelIndexFromPosition([-0.0001, 0, 0]), 31)
-  t.equal(chunker.voxelIndexFromPosition([-0.9999, 0, 0]), 31)
-  t.equal(chunker.voxelIndexFromPosition([-1, 0, 0]), 31)
-  t.end()
-})
-
 test('getBounds', function (t) {
   var chunker = voxel({chunkDistance: 2, chunkSize: 32, cubeSize: 1})
   t.deepEqual(chunker.getBounds(0, 0, 0), [[0, 0, 0], [32, 32, 32]])

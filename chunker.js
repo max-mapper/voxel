@@ -92,11 +92,6 @@ Chunker.prototype.voxelIndexFromCoordinates = function(x, y, z) {
   return vidx
 }
 
-Chunker.prototype.voxelIndexFromPosition = function(pos) {
-  var v = this.voxelVector(pos)
-  return this.voxelIndex(v)
-}
-
 Chunker.prototype.voxelAtCoordinates = function(x, y, z, val) {
   var ckey = this.chunkAtCoordinates(x, y, z).join('|')
   var chunk = this.chunks[ckey]
@@ -118,18 +113,3 @@ Chunker.prototype.voxelAtPosition = function(pos, val) {
   return v;
 }
 
-// deprecated
-Chunker.prototype.voxelIndex = function(voxelVector) {
-  var vidx = this.voxelIndexFromCoordinates(voxelVector[0], voxelVector[1], voxelVector[2])
-  return vidx
-}
-
-// deprecated
-Chunker.prototype.voxelVector = function(pos) {
-  var cubeSize = this.cubeSize
-  var mask = (1 << this.chunkBits) - 1
-  var vx = (Math.floor(pos[0] / cubeSize)) & mask
-  var vy = (Math.floor(pos[1] / cubeSize)) & mask
-  var vz = (Math.floor(pos[2] / cubeSize)) & mask
-  return [vx, vy, vz]
-};
