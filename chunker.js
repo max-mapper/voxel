@@ -86,20 +86,16 @@ Chunker.prototype.chunkAtPosition = function(position) {
 };
 
 Chunker.prototype.voxelIndexFromCoordinates = function(x, y, z) {
-  var bits = this.chunkBits
-  var mask = (1 << bits) - 1
-  var vidx = (x & mask) + ((y & mask) << bits) + ((z & mask) << bits * 2)
-  return vidx
+  throw new Error('Chunker.prototype.voxelIndexFromCoordinates removed, use voxelAtCoordinates')
 }
 
 Chunker.prototype.voxelAtCoordinates = function(x, y, z, val) {
   var ckey = this.chunkAtCoordinates(x, y, z).join('|')
   var chunk = this.chunks[ckey]
   if (!chunk) return false
-  var vidx = this.voxelIndexFromCoordinates(x, y, z)
-  var v = chunk.data[vidx]
+  var v = chunk.get(x, y, z)
   if (typeof val !== 'undefined') {
-    chunk.data[vidx] = val
+    chunk.set(x, y, z, val)
   }
   return v
 }
