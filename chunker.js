@@ -93,9 +93,9 @@ Chunker.prototype.voxelAtCoordinates = function(x, y, z, val) {
   var ckey = this.chunkAtCoordinates(x, y, z).join('|')
   var chunk = this.chunks[ckey]
   if (!chunk) return false
-  var v = chunk.get(x, y, z)
+  var v = chunk.get(z, y, x)
   if (typeof val !== 'undefined') {
-    chunk.set(x, y, z, val)
+    chunk.set(z, y, x, val)
   }
   return v
 }
