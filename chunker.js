@@ -10,6 +10,7 @@ module.exports.Chunker = Chunker
 function Chunker(opts) {
   this.distance = opts.chunkDistance || 2
   this.chunkSize = opts.chunkSize || 32
+  this.chunkPad = opts.chunkPad !== undefined ? opts.chunkPad : 4
   this.cubeSize = opts.cubeSize || 25
   this.generateVoxelChunk = opts.generateVoxelChunk
   this.chunks = {}
@@ -20,6 +21,8 @@ function Chunker(opts) {
   var bits = 0;
   for (var size = this.chunkSize; size > 0; size >>= 1) bits++;
   this.chunkBits = bits - 1;
+  this.chunkMask = (1 << this.chunkBits) - 1
+  this.chunkPadHalf = this.chunkPad >> 1
 }
 
 inherits(Chunker, events.EventEmitter)
@@ -93,13 +96,14 @@ Chunker.prototype.voxelAtCoordinates = function(x, y, z, val) {
   var ckey = this.chunkAtCoordinates(x, y, z).join('|')
   var chunk = this.chunks[ckey]
   if (!chunk) return false
-  var mask = (1 << this.chunkBits) -1
+  var mask = this.chunkMask
+  var h = this.chunkPadHalf
   var mx = x & mask
   var my = y & mask
   var mz = z & mask
-  var v = chunk.get(mz, my, mx)
+  var v = chunk.get(mz+h, my+h, mx+h)
   if (typeof val !== 'undefined') {
-    chunk.set(mz, my, mx, val)
+    chunk.set(mz+h, my+h, mx+h, val)
   }
   return v
 }
