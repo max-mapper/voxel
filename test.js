@@ -32,35 +32,6 @@ test('chunkAtPosition', function (t) {
   t.end()
 })
 
-test('voxelIndexFromCoordinates', function (t) {
-  var chunker = voxel({chunkDistance: 2, chunkSize: 32, cubeSize: 1})
-  t.equal(chunker.voxelIndexFromCoordinates(0, 0, 0), 0)
-  t.equal(chunker.voxelIndexFromCoordinates(1, 0, 0), 1)
-  t.equal(chunker.voxelIndexFromCoordinates(31, 0, 0), 31)
-  t.equal(chunker.voxelIndexFromCoordinates(32, 0, 0), 0)
-  t.equal(chunker.voxelIndexFromCoordinates(0, 1, 0), 32) 
-  t.equal(chunker.voxelIndexFromCoordinates(0, 31, 0), 32*31)
-  t.equal(chunker.voxelIndexFromCoordinates(0, 32, 0), 0)
-  t.equal(chunker.voxelIndexFromCoordinates(0, 0, 1), 32*32) 
-  t.equal(chunker.voxelIndexFromCoordinates(0, 0, 31), 32*32*31)
-  t.equal(chunker.voxelIndexFromCoordinates(0, 0, 32), 0)
-  t.equal(chunker.voxelIndexFromCoordinates(-1, 0, 0), 31)
-  t.equal(chunker.voxelIndexFromCoordinates(-31, 0, 0), 1)
-  t.equal(chunker.voxelIndexFromCoordinates(-32, 0, 0), 0)
-  t.end()
-})
-
-test('voxelIndexFromPosition', function (t) {
-  var chunker = voxel({chunkDistance: 2, chunkSize: 32, cubeSize: 1})
-  t.equal(chunker.voxelIndexFromPosition([0, 0, 0]), 0)
-  t.equal(chunker.voxelIndexFromPosition([0.9999, 0, 0]), 0)
-  t.equal(chunker.voxelIndexFromPosition([1.9999, 0, 0]), 1)
-  t.equal(chunker.voxelIndexFromPosition([-0.0001, 0, 0]), 31)
-  t.equal(chunker.voxelIndexFromPosition([-0.9999, 0, 0]), 31)
-  t.equal(chunker.voxelIndexFromPosition([-1, 0, 0]), 31)
-  t.end()
-})
-
 test('getBounds', function (t) {
   var chunker = voxel({chunkDistance: 2, chunkSize: 32, cubeSize: 1})
   t.deepEqual(chunker.getBounds(0, 0, 0), [[0, 0, 0], [32, 32, 32]])
